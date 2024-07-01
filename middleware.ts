@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    if (!token) {
+    if (!token && !pathname.startsWith('/auth/login') && !pathname.startsWith('/auth/register')) {
         return NextResponse.redirect(new URL('/auth/login', request.url));
     }
 

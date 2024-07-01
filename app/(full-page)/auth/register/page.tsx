@@ -31,7 +31,7 @@ const LoginPage = () => {
           <div className="w-full surface-card py-8 px-5 sm:px-8" style={{ borderRadius: '53px' }}>
             <div className="text-center mb-5">
               <img src="/demo/images/login/avatar.png" alt="Image" height="50" className="mb-3" />
-              <div className="text-900 text-3xl font-medium mb-3">LOGIN</div>
+              <div className="text-900 text-3xl font-medium mb-3">REGISTER</div>
             </div>
 
             <div>
@@ -54,8 +54,8 @@ const LoginPage = () => {
                   Forgot password?
                 </a>
               </div>
-              <Button label="Login" className="w-full p-3 text-xl" onClick={() => router.push('/')}></Button>
-              <Button label="Register" severity="secondary" text className="w-full p-3 text-xl mt-2" onClick={() => router.push('/auth/register')} />
+              <Button label="Register" className="w-full p-3 text-xl" onClick={() => router.push('/')}></Button>
+              <Button label="Login" severity="secondary" text className="w-full p-3 text-xl mt-2" onClick={() => router.push('/auth/login')} />
             </div>
           </div>
         </div>
