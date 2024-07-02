@@ -1,23 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 import { useRouter } from 'next/navigation';
-import React, { useContext, useState } from 'react';
-import { Checkbox } from 'primereact/checkbox';
+import React, { useContext } from 'react';
 import { Button } from 'primereact/button';
 import { Password } from 'primereact/password';
 import { LayoutContext } from '../../../../layout/context/layoutcontext';
 import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
 import { useAuthService } from '@/service/auth/auth.service';
-import { Toast } from 'primereact/toast';
 
-const LoginPage = () => {
+const RegisterPage = () => {
   /**
    * *import auth service
    */
-  const { toast, formData, handleChange, handleLogin } = useAuthService();
+  const { formData, handleChange, handleRegister } = useAuthService();
 
-  const [checked, setChecked] = useState(false);
   const { layoutConfig } = useContext(LayoutContext);
 
   const router = useRouter();
@@ -35,7 +32,8 @@ const LoginPage = () => {
         >
           <div className="w-full surface-card py-8 px-5 sm:px-8" style={{ borderRadius: '53px' }}>
             <div className="text-center mb-5">
-              <div className="text-900 text-3xl font-medium mb-3">Login to Your Account</div>
+              <div className="text-900 text-3xl font-medium mb-3">Get Started</div>
+              <span className="text-600 font-medium">Unlock a world of possibilities by registering today</span>
             </div>
 
             <div>
@@ -49,18 +47,9 @@ const LoginPage = () => {
               </label>
               <Password inputId="password1" name="password" value={formData.password} onChange={handleChange} placeholder="Password" toggleMask className="w-full mb-5" inputClassName="w-full p-3 md:w-30rem"></Password>
 
-              <div className="flex align-items-center justify-content-between mb-5 gap-5">
-                <div className="flex align-items-center">
-                  <Checkbox inputId="rememberme1" checked={checked} onChange={(e) => setChecked(e.checked ?? false)} className="mr-2"></Checkbox>
-                  <label htmlFor="rememberme1">Remember me</label>
-                </div>
-                <a className="font-medium no-underline ml-2 text-right cursor-pointer" style={{ color: 'var(--primary-color)' }}>
-                  Forgot password?
-                </a>
-              </div>
-              <Toast ref={toast} />
-              <Button label="Sign In" className="w-full p-3 text-xl" onClick={handleLogin}></Button>
-              <Button label="Don't have an account yet? Sign Up!" severity="secondary" className="w-full p-button-secondary p-button-text mt-3" onClick={() => router.push('/auth/register')}></Button>
+              <div className="flex align-items-center justify-content-between gap-5"></div>
+              <Button label="Register" className="w-full p-3 text-xl" onClick={handleRegister}></Button>
+              <Button label="Already have an account? Login" severity="secondary" className="w-full p-button-secondary p-button-text mt-3" onClick={() => router.push('/auth/login')}></Button>
             </div>
           </div>
         </div>
@@ -69,4 +58,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
