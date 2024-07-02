@@ -10,13 +10,36 @@ import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
 
 const LoginPage = () => {
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
   const [checked, setChecked] = useState(false);
   const { layoutConfig } = useContext(LayoutContext);
 
   const router = useRouter();
   const containerClassName = classNames('surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden', { 'p-input-filled': layoutConfig.inputStyle === 'filled' });
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleLogin = async () => {
+    const response = await fetch('http://localhost:8080/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+    const data = await response.json();
+
+    console.log(data);
+  };
   return (
     <div className={containerClassName}>
       <div className="flex flex-column align-items-center justify-content-center">
@@ -39,12 +62,12 @@ const LoginPage = () => {
               <label htmlFor="email1" className="block text-900 text-xl font-medium mb-2">
                 Email
               </label>
-              <InputText id="email1" type="text" placeholder="Email address" className="w-full md:w-30rem mb-5" style={{ padding: '1rem' }} />
+              <InputText id="email1" type="text" name="email" value={formData.email} onChange={handleChange} placeholder="Email address" className="w-full md:w-30rem mb-5" style={{ padding: '1rem' }} />
 
               <label htmlFor="password1" className="block text-900 font-medium text-xl mb-2">
                 Password
               </label>
-              <Password inputId="password1" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" toggleMask className="w-full mb-5" inputClassName="w-full p-3 md:w-30rem"></Password>
+              <Password inputId="password1" name="password" value={formData.password} onChange={handleChange} placeholder="Password" toggleMask className="w-full mb-5" inputClassName="w-full p-3 md:w-30rem"></Password>
 
               <div className="flex align-items-center justify-content-between mb-5 gap-5">
                 <div className="flex align-items-center">
@@ -55,7 +78,7 @@ const LoginPage = () => {
                   Forgot password?
                 </a>
               </div>
-              <Button label="Sign In" className="w-full p-3 text-xl" onClick={() => router.push('/')}></Button>
+              <Button label="Sign In" className="w-full p-3 text-xl" onClick={handleLogin}></Button>
             </div>
           </div>
         </div>
