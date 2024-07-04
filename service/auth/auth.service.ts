@@ -1,9 +1,11 @@
 import React, { useRef, useState } from 'react'
 import { Toast } from 'primereact/toast'
-import { toastMessage } from '../master/message.service'
+import { setCookie } from '@/helpers/cookies'
+import { useRouter } from 'next/navigation'
 
 export const useAuthService = () => {
   const toast = useRef<Toast>(null)
+  const router = useRouter()
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -26,9 +28,26 @@ export const useAuthService = () => {
       body: JSON.stringify(formData)
     })
 
-    const data = await response.json()
+    const result = await response.json()
 
-    toastMessage(toast, 'success', data.message, 'success', 3000)
+    if (result.data) {
+      setCookie('token', result.data.access_token, 7)
+      toast.current?.show({
+        severity: 'success',
+        summary: result.message,
+        detail: result.detail,
+        life: 3000
+      })
+
+      router.push('/')
+    } else {
+      toast.current?.show({
+        severity: 'error',
+        summary: result.error,
+        detail: result.message,
+        life: 5000
+      })
+    }
   }
 
   const handleRegister = async () => {
@@ -39,9 +58,25 @@ export const useAuthService = () => {
       },
       body: JSON.stringify(formData)
     })
-    const data = await response.json()
+    const result = await response.json()
 
-    console.log(data)
+    if (result.data) {
+      toast.current?.show({
+        severity: 'success',
+        summary: result.message,
+        detail: result.detail,
+        life: 1000
+      })
+
+      router.push('/auth/login')
+    } else {
+      toast.current?.show({
+        severity: 'error',
+        summary: result.error,
+        detail: result.message,
+        life: 5000
+      })
+    }
   }
 
   return { toast, formData, handleChange, handleLogin, handleRegister }
