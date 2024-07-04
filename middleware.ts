@@ -13,6 +13,7 @@ export function middleware(request: NextRequest) {
   if (
     !token &&
     !pathname.startsWith('/auth/login') &&
+    !pathname.startsWith('/auth/forgot-password') &&
     !pathname.startsWith('/auth/register')
   ) {
     return NextResponse.redirect(new URL('/auth/login', request.url))

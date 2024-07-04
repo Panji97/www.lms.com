@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { Toast } from 'primereact/toast'
-import { setCookie } from '@/helpers/cookies'
+import { eraseCookie, setCookie } from '@/helpers/cookies'
 import { useRouter } from 'next/navigation'
 
 export const useAuthService = () => {
@@ -30,7 +30,7 @@ export const useAuthService = () => {
 
     const result = await response.json()
 
-    if (result.data) {
+    if (response.ok) {
       setCookie('token', result.data.access_token, 7)
       toast.current?.show({
         severity: 'success',
@@ -60,12 +60,12 @@ export const useAuthService = () => {
     })
     const result = await response.json()
 
-    if (result.data) {
+    if (response.ok) {
       toast.current?.show({
         severity: 'success',
         summary: result.message,
         detail: result.detail,
-        life: 1000
+        life: 5000
       })
 
       router.push('/auth/login')
@@ -79,5 +79,22 @@ export const useAuthService = () => {
     }
   }
 
-  return { toast, formData, handleChange, handleLogin, handleRegister }
+  const handleLogout = async () => {
+    eraseCookie('token')
+    router.push('/auth/login')
+  }
+
+  const handleForgotPassword = async () => {
+    console.log('mantab')
+  }
+
+  return {
+    toast,
+    formData,
+    handleChange,
+    handleLogin,
+    handleRegister,
+    handleLogout,
+    handleForgotPassword
+  }
 }

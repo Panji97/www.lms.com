@@ -14,7 +14,8 @@ const RegisterPage = () => {
   /**
    * *import auth service
    */
-  const { toast, formData, handleChange, handleRegister } = useAuthService()
+  const { toast, formData, handleChange, handleForgotPassword } =
+    useAuthService()
 
   const { layoutConfig } = useContext(LayoutContext)
 
@@ -42,11 +43,8 @@ const RegisterPage = () => {
           >
             <div className="text-center mb-5">
               <div className="text-900 text-3xl font-medium mb-3">
-                Get Started
+                Forgot Password
               </div>
-              <span className="text-600 font-medium">
-                Unlock a world of possibilities by registering today
-              </span>
             </div>
 
             <div>
@@ -67,28 +65,11 @@ const RegisterPage = () => {
                 style={{ padding: '1rem' }}
               />
 
-              <label
-                htmlFor="password1"
-                className="block text-900 font-medium text-xl mb-2"
-              >
-                Password
-              </label>
-              <Password
-                inputId="password1"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Password"
-                toggleMask
-                className="w-full mb-5"
-                inputClassName="w-full p-3 md:w-30rem"
-              ></Password>
-
               <div className="flex align-items-center justify-content-between gap-5"></div>
               <Button
-                label="Register"
+                label="Reset Password"
                 className="w-full p-3 text-xl"
-                onClick={handleRegister}
+                onClick={handleForgotPassword}
               ></Button>
               <Button
                 label="Already have an account? Login"
