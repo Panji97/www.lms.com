@@ -92,12 +92,13 @@ const LoginPage = () => {
                   ></Checkbox>
                   <label htmlFor="rememberme1">Remember me</label>
                 </div>
-                <a
+                {/* <a
                   className="font-medium no-underline ml-2 text-right cursor-pointer"
                   style={{ color: 'var(--primary-color)' }}
+                  onClick={() => router.push('/auth/forgot-password')}
                 >
                   Forgot password?
-                </a>
+                </a> */}
               </div>
               <Toast ref={toast} />
               <Button

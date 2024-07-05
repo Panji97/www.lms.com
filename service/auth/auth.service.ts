@@ -85,7 +85,15 @@ export const useAuthService = () => {
   }
 
   const handleForgotPassword = async () => {
-    console.log('mantab')
+    const response = await fetch('http://localhost:8080/auth/forgot-password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    const result = await response.json()
+    console.log('🚀 ~ handleForgotPassword ~ result:', result)
   }
 
   return {
