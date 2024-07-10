@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import { Toast } from 'primereact/toast'
 import { eraseCookie, setCookie } from '@/helpers/cookies'
 import { useRouter } from 'next/navigation'
+import { BASEURL } from '../../superman.json'
 
 export const useAuthService = () => {
   const toast = useRef<Toast>(null)
@@ -22,7 +23,7 @@ export const useAuthService = () => {
   }
 
   const handleLogin = async () => {
-    const response = await fetch('http://localhost:8080/auth/login', {
+    const response = await fetch(`${BASEURL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -53,7 +54,7 @@ export const useAuthService = () => {
   }
 
   const handleRegister = async () => {
-    const response = await fetch('http://localhost:8080/auth/register', {
+    const response = await fetch(`${BASEURL}/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -98,7 +99,7 @@ export const useAuthService = () => {
   }
 
   const handleForgotPassword = async () => {
-    const response = await fetch('http://localhost:8080/auth/forgot-password', {
+    const response = await fetch(`${BASEURL}/auth/forgot-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -140,7 +141,7 @@ export const useAuthService = () => {
       return
     }
 
-    const response = await fetch('http://localhost:8080/auth/reset-password', {
+    const response = await fetch(`${BASEURL}/auth/reset-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
