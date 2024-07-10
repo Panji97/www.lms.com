@@ -8,7 +8,9 @@ export const useAuthService = () => {
   const router = useRouter()
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
+    confirm_password: '',
+    token: ''
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +70,9 @@ export const useAuthService = () => {
         life: 5000
       })
 
-      router.push('/auth/login')
+      setInterval(() => {
+        router.push('/auth/login')
+      }, 2000)
     } else {
       toast.current?.show({
         severity: 'error',
@@ -80,8 +84,17 @@ export const useAuthService = () => {
   }
 
   const handleLogout = async () => {
+    toast.current?.show({
+      severity: 'success',
+      summary: 'success',
+      detail: 'Success logout account',
+      life: 2000
+    })
+
     eraseCookie('token')
-    router.push('/auth/login')
+    setInterval(() => {
+      router.push('/auth/login')
+    }, 2000)
   }
 
   const handleForgotPassword = async () => {
@@ -92,17 +105,81 @@ export const useAuthService = () => {
       },
       body: JSON.stringify(formData)
     })
+
     const result = await response.json()
-    console.log('🚀 ~ handleForgotPassword ~ result:', result)
+
+    if (response.ok) {
+      toast.current?.show({
+        severity: 'success',
+        summary: result.message,
+        detail: result.detail,
+        life: 2000
+      })
+
+      setInterval(() => {
+        router.push('/auth/login')
+      }, 2000)
+    } else {
+      toast.current?.show({
+        severity: 'error',
+        summary: result.error,
+        detail: result.message,
+        life: 5000
+      })
+    }
+  }
+
+  const handleResetPassword = async () => {
+    if (formData.password !== formData.confirm_password) {
+      toast.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Passwords do not match',
+        life: 5000
+      })
+      return
+    }
+
+    const response = await fetch('http://localhost:8080/auth/reset-password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+
+    const result = await response.json()
+
+    if (response.ok) {
+      toast.current?.show({
+        severity: 'success',
+        summary: result.message,
+        detail: result.detail,
+        life: 2000
+      })
+
+      setInterval(() => {
+        router.push('/auth/login')
+      }, 2000)
+    } else {
+      toast.current?.show({
+        severity: 'error',
+        summary: result.error,
+        detail: result.message,
+        life: 5000
+      })
+    }
   }
 
   return {
     toast,
     formData,
+    setFormData,
     handleChange,
     handleLogin,
     handleRegister,
     handleLogout,
-    handleForgotPassword
+    handleForgotPassword,
+    handleResetPassword
   }
 }

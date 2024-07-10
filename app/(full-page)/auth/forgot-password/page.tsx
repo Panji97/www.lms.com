@@ -10,7 +10,7 @@ import { classNames } from 'primereact/utils'
 import { useAuthService } from '@/service/auth/auth.service'
 import { Toast } from 'primereact/toast'
 
-const RegisterPage = () => {
+const ForgotPasswordPage = () => {
   /**
    * *import auth service
    */
@@ -85,4 +85,4 @@ const RegisterPage = () => {
   )
 }
 
-export default RegisterPage
+export default ForgotPasswordPage

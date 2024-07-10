@@ -11,9 +11,10 @@ import React, {
 import { AppTopbarRef } from '@/types'
 import { LayoutContext } from './context/layoutcontext'
 import { useAuthService } from '@/service/auth/auth.service'
+import { Toast } from 'primereact/toast'
 
 const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
-  const { handleLogout } = useAuthService()
+  const { toast, handleLogout } = useAuthService()
   const { layoutConfig, layoutState, onMenuToggle, showProfileSidebar } =
     useContext(LayoutContext)
   const menubuttonRef = useRef(null)
@@ -28,6 +29,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
 
   return (
     <div className="layout-topbar">
+      <Toast ref={toast} />
       <Link href="/" className="layout-topbar-logo">
         <img
           src={`/layout/images/logo-${

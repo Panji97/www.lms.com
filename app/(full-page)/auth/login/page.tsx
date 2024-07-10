@@ -42,9 +42,24 @@ const LoginPage = () => {
             style={{ borderRadius: '53px' }}
           >
             <div className="text-center mb-5">
+              <img
+                src="/demo/images/blocks/logos/hyper.svg"
+                alt="hyper"
+                height={50}
+                className="mb-3"
+              />
               <div className="text-900 text-3xl font-medium mb-3">
-                Login to Your Account
+                Welcome Back
               </div>
+              <span className="text-600 font-medium line-height-3">
+                Don&apos;t have an account?
+              </span>
+              <a
+                className="font-medium no-underline ml-2 text cursor-pointer"
+                onClick={() => router.push('/auth/register')}
+              >
+                Create today!
+              </a>
             </div>
 
             <div>
@@ -75,6 +90,7 @@ const LoginPage = () => {
                 inputId="password1"
                 name="password"
                 value={formData.password}
+                feedback={false}
                 onChange={handleChange}
                 placeholder="Password"
                 toggleMask
@@ -92,25 +108,18 @@ const LoginPage = () => {
                   ></Checkbox>
                   <label htmlFor="rememberme1">Remember me</label>
                 </div>
-                {/* <a
+                <a
                   className="font-medium no-underline ml-2 text-right cursor-pointer"
-                  style={{ color: 'var(--primary-color)' }}
                   onClick={() => router.push('/auth/forgot-password')}
                 >
                   Forgot password?
-                </a> */}
+                </a>
               </div>
               <Toast ref={toast} />
               <Button
                 label="Sign In"
                 className="w-full p-3 text-xl"
                 onClick={handleLogin}
-              ></Button>
-              <Button
-                label="Don't have an account yet? Sign Up!"
-                severity="secondary"
-                className="w-full p-button-secondary p-button-text mt-3"
-                onClick={() => router.push('/auth/register')}
               ></Button>
             </div>
           </div>
