@@ -9,9 +9,7 @@ export function middleware(request: NextRequest) {
   const staticFileRegex = /\.(css|js|jpg|jpeg|png|gif|ico|svg|ttf|woff|woff2)$/
 
   // Penanganan file statis
-  if (staticFileRegex.test(pathname)) {
-    return NextResponse.next()
-  }
+  if (staticFileRegex.test(pathname)) return NextResponse.next()
 
   // Pengecekan untuk akses halaman otentikasi
   if (
